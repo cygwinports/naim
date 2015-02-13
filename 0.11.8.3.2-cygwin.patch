@@ -1,0 +1,25 @@
+Fedora does not ship the headers, so presumably no plugins exist.
+As far as dlopen(NULL) with -export-dynamic, /usr/bin/libtool handles that.
+
+--- origsrc/naim-0.11.8.3.2/configure	2008-11-26 22:25:06.000000000 -0600
++++ src/naim-0.11.8.3.2/configure	2015-02-13 14:02:15.870151400 -0600
+@@ -23962,7 +23962,7 @@ fi
+ 	{ echo "$as_me:$LINENO: checking for Cygwin" >&5
+ echo $ECHO_N "checking for Cygwin... $ECHO_C" >&6; }
+ 	case $host_os in
+-		*cygwin*)
++		*nothanks*)
+ 			{ echo "$as_me:$LINENO: result: yes" >&5
+ echo "${ECHO_T}yes" >&6; }
+ 			cygwindocdir='${datadir}/doc/Cygwin'
+--- origsrc/naim-0.11.8.3.2/src/naim.m4	2008-09-14 16:06:04.000000000 -0500
++++ src/naim-0.11.8.3.2/src/naim.m4	2015-02-13 14:01:52.750119500 -0600
+@@ -99,7 +99,7 @@ AC_DEFUN([AC_PROG_NAIM],
+ 	AC_REQUIRE([AC_CANONICAL_HOST])
+ 	AC_MSG_CHECKING([for Cygwin])
+ 	case $host_os in
+-		*cygwin*)
++		*nothanks*)
+ 			AC_MSG_RESULT(yes)
+ 			AC_SUBST([cygwindocdir], ['${datadir}/doc/Cygwin'])
+ 			AC_SUBST([pkgdocdir], ['${datadir}/doc/${PACKAGE_TARNAME}-${PACKAGE_VERSION}'])

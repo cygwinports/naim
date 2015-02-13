@@ -1,0 +1,33 @@
+NAME="naim"
+VERSION=0.11.8.3.2
+RELEASE=1
+CATEGORY="Net"
+SUMMARY="Console AIM, ICQ, IRC, and Lily client"
+DESCRIPTION=" naim is a console client for AOL Instant Messenger (AIM),
+AOL I Seek You (ICQ), Internet Relay Chat (IRC), and The lily CMC."
+HOMEPAGE="http://naim.n.ml.org/"
+SRC_URI="http://naim.googlecode.com/files/naim-${VERSION}.tar.bz2"
+PATCH_URI="0.11.8.3.2-cygwin.patch"
+
+src_compile() {
+	# the included build system is old, cannot be properly autoreconf'ed,
+	# and the code needs to be ported to the current libltdl API.
+	gnuconfigize ${S}
+	cd ${B}
+	cygconf
+	cygmake -j1 LIBTOOL=/usr/bin/libtool am__aclocal_m4_deps=
+}
+
+src_install() {
+	# cannot manage a 'make install' without it trying to autoreconf
+	cd ${B}
+	dobin src/naim.exe
+	for proto in irc icq lily
+	do
+		dosym naim.exe /usr/bin/n${proto}
+	done
+
+	cd ${S}
+	dodoc doc/*.hlp src/keyboard.txt
+	doman doc/*.1
+}
